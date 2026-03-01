@@ -3,6 +3,8 @@ from aiogram import Bot, Dispatcher
 from dotenv import load_dotenv
 
 from handles.root import root
+from handles.user import user
+from database.db import create_tables
 
 load_dotenv()
 logging.basicConfig(level=logging.INFO)
@@ -15,7 +17,8 @@ bot = Bot(TOKEN)
 dp = Dispatcher()
 
 async def main():
-    dp.include_router(root)
+    dp.include_routers(root, user)
+    await create_tables()
     await dp.start_polling(bot)
 
 if __name__ == '__main__':
